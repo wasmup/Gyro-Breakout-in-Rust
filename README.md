@@ -62,13 +62,9 @@ arm-none-eabi-size target/thumbv7em-none-eabihf/release/gyro-breakout
 
 ## Verification and limitations
 
-A clean build, flash, and game test have succeeded on physical STM32F429I-DISCO hardware, including touchscreen zoom on all four fractals and the particle benchmark with DMA2D. The revised frame-rate display has not yet been tested on hardware. Host tests exercise game rules, not peripheral behavior, and cross-compilation alone does not verify the clock, display, gyro, timing, or flash programming.
+A clean build, flash, and game test have succeeded on physical STM32F429I-DISCO hardware, including touchscreen zoom on all four fractals, the particle benchmark with DMA2D, and the revised frame-rate display. Host tests exercise game rules, not peripheral behavior, and cross-compilation alone does not verify the clock, display, gyro, timing, or flash programming.
 
 The game and renderer are `no_std` library modules. `src/game.rs` owns game state and rules, with ball collisions in `src/game/physics.rs` and power-ups in `src/game/power_up.rs`; `src/board.rs` contains the F429 register-level drivers. No allocator or external crates are used. The framebuffer occupies about 150 KiB of SRAM.
-
-## License
-
-MIT; see [LICENSE](LICENSE).
 
 ## Memory use
 
@@ -79,8 +75,13 @@ The current release build uses the following memory on the STM32F429I-DISCO:
 | Main internal SRAM | 192 KiB | 150 KiB static data |
 | Internal CCM RAM | 64 KiB | 8 KiB reserved for the stack |
 | External SDRAM | 8 MiB | 300 KiB startup framebuffers |
-| Internal flash | 2 MiB | 21,244 bytes |
+| Internal flash | 2 MiB | 22,248 bytes |
 
 The 320 × 240 RGB565 game framebuffer accounts for all 153,600 bytes of static main SRAM, leaving 42 KiB unallocated. Two separate 153,600-byte framebuffers in external SDRAM are reused for the startup images; gameplay returns to the internal framebuffer. The stack occupies a reserved 8 KiB region in CCM; 56 KiB of CCM remains unallocated. Actual stack usage, including game state and temporary values, has not been measured on the board. No heap allocator is used. CCM is accessible to CPU but not the LCD controller, so neither framebuffer is placed there.
 
 The `dec` column in the size output adds flash and static RAM sections; it is not the RAM usage alone.
+
+
+## License
+
+MIT; see [LICENSE](LICENSE).
