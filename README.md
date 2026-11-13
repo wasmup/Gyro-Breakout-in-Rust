@@ -1,5 +1,7 @@
 # Gyro Breakout in Rust
 
+![Gyro Breakout Demo](output.gif)
+
 A dependency-free, bare-metal Breakout game for the **STM32F429I-DISCO** (STM32F429ZI). It uses the onboard LCD, touchscreen, gyroscope, blue user button, and ST-LINK, with register-level hardware drivers and startup.
 
 ## Play
