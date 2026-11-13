@@ -1,0 +1,21 @@
+[package]
+name = "gyro-breakout"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Gyroscope-controlled Breakout for the STM32F429I-DISCO"
+
+[features]
+firmware = []
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+
+[[bin]]
+name = "gyro-breakout"
+path = "src/main.rs"
+test = false
+bench = false
+required-features = ["firmware"]
